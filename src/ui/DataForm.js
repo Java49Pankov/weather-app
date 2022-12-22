@@ -21,6 +21,7 @@ export class DataForm {
        this.#hourFromElement = document.getElementById(params.idHourFrom);
        this.#hourToElement = document.getElementById(params.idHourTo);
        this.#errorMessageElem = document.getElementById(params.idErrorMessage);
+    //    this.#dateFromElement.min = params.minDate;
        this.onChangeDate();
        this.onChangeHours();
 
