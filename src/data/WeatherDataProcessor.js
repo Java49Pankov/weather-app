@@ -8,7 +8,7 @@ export class WeatherDataProcessor {
         { city: "Eilat", latitude: 29.5577, longitude: 34.9519 }]
     }
     getData(requestObject) {
-        //{city, dateFrom, dateTo, hourFrom, hourTo}
+      
         const url = this.getUrl(requestObject);
         const promiseResponse = fetch(url);
         return this.processData(promiseResponse.then(response => response.json()),
