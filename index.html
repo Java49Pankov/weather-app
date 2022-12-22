@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/temperatures.css">
+    <title>Temperatures</title>
+</head>
+
+<body>
+    <header class="detail-logo">Weather in the city</header>
+    <form id="temp_form" class="form-temperature">
+        <div class="details-city">
+            <select name="city" required>
+                <option value hidden selected disabled>
+                    --Select City--
+                </option>
+                <option value="Haifa">Haifa</option>
+                <option value="Tel-Aviv">Tel-Aviv</option>
+                <option value="Rehovot">Rehovot</option>
+                <option value="Jerusalem">Jerusalem</option>
+                <option value="Eilat">Eilat</option>
+            </select>
+        </div>
+        <div class="two-inputs">
+            <label>Choose date from:</label>
+            <input id="date_from" name="dateFrom" type="date" min="2022-12-19" max="2023-01-04" required>
+            <label>Choose date to:</label>
+            <input id="date_to" name="dateTo" type="date" min="2022-12-19" max="2023-01-04" required>
+        </div>
+        <div class="two-inputs">
+            <label>Choose time from:</label>
+            <input id="time_from" type="time" name="timeFrom" min="0:00" max="23:59" required>
+            <label>Choose time to:</label>
+            <input id="time_to" type="time" name="timeTo" min="0:00" max="23:59" required>
+        </div>
+        <p id="date_error" class="error-message"></p>
+        <div class="buttons">
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+        </div>
+    </form>
+    <div id="temperatures-list" class="details-item">
+    </div>
+
+
+</body>
+<script src="src/main.js" type="module"></script>
+
+</html>

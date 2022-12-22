@@ -1,0 +1,43 @@
+?==========HW26============
+1. Write Single Page Application for getting temperature values in the preconfigured places
+1.1. The application gets the weather data from WEB service open -
+meteo.com. Full API documentation may be found here
+https://open-meteo.com/en/docs/gfs-api#api-documentation
+1.2.The application comprises of the following modules
+1.2.1. DataForm – class is intended for inputting the following data
+1.2.1.1. Select  a city from 5 options, for example
+1.2.1.1.1. Haifa
+1.2.1.1.2. Tel - Aviv
+1.2.1.1.3. Rehovot
+1.2.1.1.4. Jerusalem
+1.2.1.1.5. Eilat
+1.2.1.2. Date From - From current date to current date plus 17 days. This
+HW assumes hardcoded values in the index.html for attributes min and
+max of the element <input> , for example <input type=”date” id=”date_from” 
+name=”dateFrom” min=”2022 - 12 - 19" max=”2023 - 01 - 04"
+1.2.1.3. Date To – The same as 1.2.1.2 for example <input type=”date”
+id=”date_to” name=”dateTo” min=”2022 - 12 - 19" max=”2023 - 01 - 04"
+1.2.1.4. The form should validate that the date from less or equal
+ than date to 
+1.2.1.5. Hour From – number from 0 to 23
+1.2.1.6. Hour To – number from 0 to 23
+1.2.1.7. The form should validate that the hour from less or equal than
+hour to
+1.2.2. WeatherDataProcessor – class intended for sending proper request to
+open - meteo.com service and for processing the received weather data
+1.2.2.1. Method getData – method gets object received from the
+DataForm containing city, dateFrom, dateTo, hourFrom, hourTo
+1.2.2.1.1. The method has been already written at the classwork
+1.2.2.2. Method getUrl – method gets the same as getData and returns
+a proper URL, for example see the commented lines 5 - 11 of the main.js
+1.2.2.3. Method processData – method gets promiseData as an event of
+getting the data from the service. The method contains functionality of
+the data processing for receiving the data required
+for the showing on the Browser. The method returns event of taking the required for
+showing data 
+1.2.3. TemperaturesList – class intended for showing weather data similar to
+EmployeesList in the previous application. It contains a header with the city
+name and list of the items each of them contains the following
+1.2.3.1. Data (example, 2022 - 12 - 20)
+1.2.3.2. Hour (example, 15:00)
+1.2.3.3. Temperature value (example, 17.5)
