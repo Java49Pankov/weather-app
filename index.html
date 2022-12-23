@@ -14,25 +14,20 @@
     <section>
         <form id="data_form" class="form-class">
             <div class="one-input">
-                <select name="city" required>
+                <select name="city" id="city_list" required>
                     <option value hidden selected disabled>
                         --Select City--
                     </option>
-                    <option value="Haifa">Haifa</option>
-                    <option value="Rehovot">Rehovot</option>
-                    <option value="Tel-Aviv">Tel-Aviv</option>
-                    <option value="Jerusalem">Jerusalem</option>
-                    <option value="Eilat">Eilat</option>
                 </select>
             </div>
             <div class="two-inputs">
                 <div class="date-label">
                     <label>Enter Date-From</label>
-                    <input type="date" name="dateFrom" required id="date_from" min="2022-12-21" max="2023-01-05">
+                    <input type="date" name="dateFrom" required id="date_from" min="" max="">
                 </div>
                 <div class="date-label">
                     <label>Enter Date-To</label>
-                    <input type="date" name="dateTo" required id="date_to" min="2022-12-21" max="2023-01-05">
+                    <input type="date" name="dateTo" required id="date_to" min="" max="">
                 </div>
             </div>
             <div class="two-inputs">
@@ -48,12 +43,10 @@
                 <h2 id="city" class="city-title"></h2>
             </header>
             <ul id="items-list" class="items-list">
-
             </ul>
-
         </form>
     </section>
-   
+
     <script src="src/main.js" type="module"></script>
 </body>
 

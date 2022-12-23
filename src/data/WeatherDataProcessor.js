@@ -7,14 +7,15 @@ export class WeatherDataProcessor {
         { city: "Tel-Aviv", latitude: 32.0853, longitude: 34.7818 },
         { city: "Eilat", latitude: 29.5577, longitude: 34.9519 }]
     }
-    getData(requestObject) {
-      
+
+    async getData(requestObject) {
         const url = this.getUrl(requestObject);
-        const promiseResponse = fetch(url);
-        return this.processData(promiseResponse.then(response => response.json()),
-         requestObject);
+        const response = await fetch(url);
+        return this.processData((await response.json()),
+            requestObject);
 
     }
+
     getUrl(requestObject) {
         const baseUrl = "https://api.open-meteo.com/v1/gfs?";
         const baseParams = "&hourly=temperature_2m&timezone=IST&";
@@ -24,33 +25,43 @@ export class WeatherDataProcessor {
         const startDate = requestObject.dateFrom;
         const endDate = requestObject.dateTo;
         const url = `${baseUrl}latitude=${latitude}&longitude=${longitude}${baseParams}start_date=${startDate}&end_date=${endDate}`
-        console.log(url)
         return url;
     }
-    processData(promiseData, requestObject) {
-        return promiseData.then(data => {
-            const times = data.hourly.time;
-            const temperatures = data.hourly.temperature_2m;
-            
-            const timesSelectedDatesHours = times.filter((__,index) =>
-            {
-                const hour = index % 24;
-                return hour >= requestObject.hourFrom && hour<= requestObject.hourTo;
-            } )
-           
-            const temperaturesDatesHours = temperatures.filter((__,index) =>
-            {
-                const hour = index % 24;
-                return hour >= requestObject.hourFrom && index <= requestObject.hourTo;
-            } )
-            const objects = timesSelectedDatesHours.map((dt, index) => {
-                const dateTime = dt.split("T");
-                const res = {date: dateTime[0], hour: dateTime[1], temperature: temperaturesDatesHours[index]}
-                return res
-            } )
 
-            
-           return {city: requestObject.city, objects}
+    processData(data, requestObject) {
+        const times = data.hourly.time;
+        const temperatures = data.hourly.temperature_2m;
+        const indexFrom = getIndexOfDate(times, requestObject.dateFrom);
+        const indexTo = getIndexOfDate(times, requestObject.dateTo) + 24;
+        const timesSelectedDates = times.slice(indexFrom, indexTo);
+        const timesSelectedDatesHours = timesSelectedDates.filter((time, index) => {
+            index = index % 24;
+            return index >= requestObject.hourFrom && index <= requestObject.hourTo;
         })
+        const temperaturesSelectedDates = temperatures.slice(indexFrom, indexTo);
+        const temperaturesDatesHours = temperaturesSelectedDates.filter((time, index) => {
+            index = index % 24;
+            return index >= requestObject.hourFrom && index <= requestObject.hourTo;
+        })
+        const objects = timesSelectedDatesHours.map((dt, index) => {
+            const dateTime = dt.split("T");
+            return { date: dateTime[0], hour: dateTime[1], temperature: temperaturesDatesHours[index] }
+        })
+        return { city: requestObject.city, objects }
     }
+
+    getCities() {
+        let arrCities = this.#cityGeocodes.map(res => {
+            return res.city;
+        })
+        return arrCities;
+    }
+
+    getHowDays() {
+        return 17;
+    }
+}
+
+function getIndexOfDate(times, date) {
+    return times.findIndex(t => t.includes(date));
 }
