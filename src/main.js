@@ -4,7 +4,7 @@ import { WeatherDataProcessor } from "./data/WeatherDataProcessor.js";
 import { minMaxDays } from "./ui/minMaxDays.js";
 
 const weatherProcessor = new WeatherDataProcessor();
-const temperatureList = new TemperaturesList("items-list", "city_list");
+const temperatureList = new TemperaturesList("items-list", "city");
 
 const params = {
     idForm: "data_form", idDateFrom: "date_from", idDateTo: "date_to",
