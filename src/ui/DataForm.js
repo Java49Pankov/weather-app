@@ -1,5 +1,6 @@
 import { showErrorMessage } from "./errorMessage.js";
 export class DataForm {
+
     #formElement;
     #dateFromElement;
     #dateToElement;
@@ -10,11 +11,8 @@ export class DataForm {
     #dateFrom;
     #dateTo;
     #hourFrom;
-    #hourTo;
-    #cityListElement;
-    #cities;
-    #minDate;
-    #maxDate;
+    #hourTo
+
     constructor(params) {
         this.#formElement = document.getElementById(params.idForm);
         this.#inputElements = document.querySelectorAll(`#${params.idForm} [name]`);
@@ -23,15 +21,18 @@ export class DataForm {
         this.#hourFromElement = document.getElementById(params.idHourFrom);
         this.#hourToElement = document.getElementById(params.idHourTo);
         this.#errorMessageElem = document.getElementById(params.idErrorMessage);
-        this.#cityListElement = document.getElementById(params.idListCities);
-        this.#cities = params.cities;
-        this.#minDate = params.minMaxDate.minDay;
-        this.#maxDate = params.minMaxDate.maxDay;
         this.onChangeDate();
         this.onChangeHours();
-        this.getListItems();
-    }
+        addOptions(params.cities, params.idCities);
+        this.addMinMaxDates(params.minMaxDates);
 
+    }
+    addMinMaxDates(minMaxDates) {
+        this.#dateFromElement.min = minMaxDates.minDate;
+        this.#dateFromElement.max = minMaxDates.maxDate;
+        this.#dateToElement.min = minMaxDates.minDate;
+        this.#dateToElement.max = minMaxDates.maxDate;
+    }
     addHandler(processFun) {
         this.#formElement.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -41,23 +42,22 @@ export class DataForm {
                     return res;
                 }, {});
             processFun(data);
+
+
         })
     }
-
     doubleNumber(number) {
+
         console.log(number * 2);
     }
-
     onChangeDate() {
         this.#dateFromElement.addEventListener('change', this.dateHandler.bind(this));
         this.#dateToElement.addEventListener('change', this.dateHandler.bind(this));
     }
-
     onChangeHours() {
         this.#hourFromElement.addEventListener('change', this.hourHandler.bind(this));
         this.#hourToElement.addEventListener('change', this.hourHandler.bind(this));
     }
-
     dateHandler(event) {
         if (event.target == this.#dateFromElement) {
             if (this.#dateTo && this.#dateTo < this.#dateFromElement.value) {
@@ -75,7 +75,6 @@ export class DataForm {
             }
         }
     }
-
     hourHandler(event) {
         const hour = event.target.value;
         if (hour < 0 || hour > 23) {
@@ -101,14 +100,11 @@ export class DataForm {
         }
     }
 
-    getListItems() {
-        this.#cityListElement.innerHTML += this.#cities.map(res => {
-            return `<option value="${res}">${res}</option>`
-        });
-        this.#dateFromElement.min = this.#minDate;
-        this.#dateFromElement.max = this.#maxDate;
-        this.#dateToElement.min = this.#minDate;
-        this.#dateToElement.max = this.#maxDate;
-    }
 }
-
+function addOptions(cities, idCities) {
+    document.getElementById(idCities).innerHTML += getOptions(cities);
+}
+function getOptions(cities) {
+    return cities.map(c => `<option value="${c}">${c}</option>`)
+        .join('');
+}
